@@ -3,7 +3,8 @@ from arcpy import env
 from arcpy.sa import *
 
 # Set the current workspace
-# 
+
+env.overwriteOutput = True
 env.workspace = r'G:\VDCNS\protocolo\pro'
 env.extent = "MAXOF"
 
@@ -13,20 +14,22 @@ arcpy.CheckOutExtension("Spatial")
 
 # Get a list of ESRI GRIDs from the workspace and print
 #
-rasterList = arcpy.ListRasters()
+rasterList = []
 ruta = r'G:\VDCNS\protocolo\pro'
 for i in os.listdir(ruta):
 
 	nruta = os.path.join(ruta, i)
-	for r in os.listdir(nruta):
+	if os.path.isdir(nruta):
+		for r in os.listdir(nruta):
 
-		if r.endswith('evi_reclass.img'):
+			if r.endswith('_binwater.img'):
 
-			raster = os.path.join(nruta, r)
-			rasterList.append(raster) #= arcpy.ListRasters("*", "TIF")
+				raster = os.path.join(nruta, r)
+				rasterList.append(raster) #= arcpy.ListRasters("*", "TIF")
 
+print len(rasterList)
 # Execute CellStatistics
 outCellStatistics = CellStatistics(rasterList, "SUM", "DATA")
 
-# Save the output 
-outCellStatistics.save(r'G:\VDCNS\protocolo\pro\suma_evi.TIF')
+# Save the output
+outCellStatistics.save(r'G:\VDCNS\protocolo\pro\suma_water_bin.TIF')
