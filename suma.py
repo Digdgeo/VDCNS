@@ -19,17 +19,19 @@ ruta = r'G:\VDCNS\protocolo\pro'
 for i in os.listdir(ruta):
 
 	nruta = os.path.join(ruta, i)
+
 	if os.path.isdir(nruta):
 		for r in os.listdir(nruta):
 
-			if r.endswith('_binwater.img'):
+			if r.endswith('binwater.img'):
+				if int(os.path.split(r)[1][:4]) < 2007:
 
-				raster = os.path.join(nruta, r)
-				rasterList.append(raster) #= arcpy.ListRasters("*", "TIF")
+					raster = os.path.join(nruta, r)
+					rasterList.append(raster) #= arcpy.ListRasters("*", "TIF")
 
 print len(rasterList)
 # Execute CellStatistics
 outCellStatistics = CellStatistics(rasterList, "SUM", "DATA")
 
 # Save the output
-outCellStatistics.save(r'G:\VDCNS\protocolo\pro\suma_water_bin.TIF')
+outCellStatistics.save(r'G:\VDCNS\protocolo\pro\suma_waterbin_2007b.TIF')
