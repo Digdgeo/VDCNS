@@ -24,4 +24,3 @@ for r in os.listdir(env.workspace):
                 outExtractByMask.save(out)
                 
                 
-###############################Ahora las bandas normalizadas####################################
